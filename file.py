@@ -1,94 +1,31 @@
-# import mysql.connector
-# import pandas as pd
+import pandas as pd
+from sqlalchemy import create_engine
 
-# # Create a database connection
-# conn = mysql.connector.connect(
-#     host="localhost",
-#     user="root",
-#     password="ramanamaharishi@2024",
-#     database="sales_db"
-# )
+# URL-encoded password
+password = ".........."
 
-# # if conn.is_connected():
-# #     print("Connected to MySQL database")
+# Create a database connection
+engine = create_engine(f'mysql+pymysql://root:{password}@localhost/sales_db')
 
-# # # Fetch data from the sales table
-# # query = "SELECT * FROM sales"
-# # df = pd.read_sql(query, conn)
+# Fetch data from the sales table
+query = "SELECT * FROM sales"
+df = pd.read_sql(query, engine)
 
-# # print(df)
+print(df)
 
-# # # Close the connection
-# # conn.close()
+# Calculate total sales
+df['total_sales'] = df['quantity'] * df['price']
 
+# Group by product and calculate total sales per product
+sales_per_product = df.groupby('product')['total_sales'].sum().reset_index()
 
+print(sales_per_product)
 
 
-# # # ...existing code...
+# ...existing code...
 
-# # # Calculate total sales
-# # df['total_sales'] = df['quantity'] * df['price']
-
-# # # Group by product and calculate total sales per product
-# # sales_per_product = df.groupby('product')['total_sales'].sum().reset_index()
-
-# # print(sales_per_product)
-
-
-
-# # # ...existing code...
-
-# # # Export to Excel
-# # sales_per_product.to_excel('sales_analysis.xlsx', index=False)
-
-# import pandas as pd
-# from sqlalchemy import create_engine
-
-# # Create a database connection
-# engine = create_engine('mysql+pymysql://root:ramanamaharishi@2024@localhost/sales_db')
-
-# # Fetch data from the sales table
-# query = "SELECT * FROM sales"
-# df = pd.read_sql(query, engine)
-
-# print(df)
-
-# # Calculate total sales
-# df['total_sales'] = df['quantity'] * df['price']
-
-# # Group by product and calculate total sales per product
-# sales_per_product = df.groupby('product')['total_sales'].sum().reset_index()
-
-# print(sales_per_product)
-
-# import pandas as pd
-# from sqlalchemy import create_engine
-
-# # URL-encoded password
-# password = "ramanamaharishi%402024"
-
-# # Create a database connection
-# engine = create_engine(f'mysql+pymysql://root:{password}@localhost/sales_db')
-
-# # Fetch data from the sales table
-# query = "SELECT * FROM sales"
-# df = pd.read_sql(query, engine)
-
-# print(df)
-
-# # Calculate total sales
-# df['total_sales'] = df['quantity'] * df['price']
-
-# # Group by product and calculate total sales per product
-# sales_per_product = df.groupby('product')['total_sales'].sum().reset_index()
-
-# print(sales_per_product)
-
-
-# # ...existing code...
-
-# # Export to Excel
-# sales_per_product.to_excel('sales_analysis.xlsx', index=False)
+# Export to Excel
+sales_per_product.to_excel('sales_analysis.xlsx', index=False)
 
 
 
@@ -98,7 +35,7 @@ from sqlalchemy import create_engine
 
 def fetch_data():
     # URL-encoded password
-    password = "ramanamaharishi%402024"
+    password = "........."
     
     # Create a database connection
     engine = create_engine(f'mysql+pymysql://root:{password}@localhost/sales_db')
